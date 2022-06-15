@@ -1,13 +1,37 @@
 import {useEffect, useState} from "react";
+
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+
 import './App.css';
+import {Grid} from "@mui/material";
 
 
 function App() {
     const [messageList, setMessageList] = useState([])
     const [text, setText] = useState('')
     const [author, setAuthor] = useState('')
+    const [chats, setChats] = useState([
+        {
+            name: 'Chat1',
+            id: 1
+        },
+        {
+            name: 'Chat2',
+            id: 2
+        },
+        {
+            name: 'Chat3',
+            id: 3
+        },
+    ])
 
-    useEffect(()=>{
+    useEffect(() => {
         setTimeout(robotAnswer, 1500)
     }, [messageList])
 
@@ -37,8 +61,8 @@ function App() {
     }
 
     function robotAnswer() {
-        const lastAuthor = messageList[messageList.length -1]
-        if(lastAuthor && lastAuthor.author){
+        const lastAuthor = messageList[messageList.length - 1]
+        if (lastAuthor && lastAuthor.author) {
             setMessageList(prevState => [
                 ...prevState,
                 {
@@ -50,36 +74,68 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <ul>
-                {messageList.map(item => {
-                    return (
-                        <li key={item.id}>
-                            <p>Text: {item.text}</p>
-                            <p>Author: {item.author}</p>
-                        </li>
-                    )
-                })}
-            </ul>
-            <div>
-                <form onSubmit={e => onFormSubmit(e)}>
-                    <input
-                        value={text}
-                        type="text"
-                        placeholder={'Text'}
-                        required
-                        onChange={e => onInputTextChange(e)}></input>
-                    <input
-                        value={author}
-                        type="text"
-                        placeholder={'Author'}
-                        required
-                        onChange={e => onInputAuthorChange(e)}></input>
-                    <button type="submit">Send</button>
-                </form>
+        <Box marginTop={'50px'} className="App" sx={{flexGrow: 1}}>
+            <Grid container spacing={2}>
+                <Grid xs={4}>
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton selected>
+                                <ListItemText inset primary="Chat1"/>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemText inset primary="Chat2"/>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemText inset primary="Chat3"/>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </Grid>
 
-            </div>
-        </div>
+
+                <Grid xs={8}>
+                    <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
+                        {messageList.map(item => {
+                            return (
+                                <ListItem key={item.id}>
+                                    <ListItemText primary={item.author} secondary={item.text}/>
+                                </ListItem>
+                            )
+                        })}
+                    </List>
+                    <div>
+                        <Box component='form'
+                             sx={{
+                                 '& > :not(style)': {m: 1, width: '25ch'},
+                             }}
+                             autoComplete="off"
+                             onSubmit={e => onFormSubmit(e)}>
+                            <TextField
+                                label="Text"
+                                variant="outlined"
+                                value={text}
+                                type="text"
+                                required
+                                focused
+                                onChange={e => onInputTextChange(e)}></TextField>
+                            <TextField
+                                label="Author"
+                                variant="outlined"
+                                value={author}
+                                type="text"
+                                required
+                                onChange={e => onInputAuthorChange(e)}></TextField>
+                            <Button type="submit" variant="contained">Send</Button>
+                        </Box>
+
+                    </div>
+                </Grid>
+            </Grid>
+        </Box>
     );
 }
 
