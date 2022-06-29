@@ -5,28 +5,22 @@ import {Routes, Route} from "react-router-dom";
 import Nav from "./components/Nav";
 import Profile from "./pages/Profile";
 import Page404 from "./pages/404";
-import {useDispatch, useSelector} from "react-redux";
+import Chats from "./pages/Chats";
+import Messages from "./pages/Message";
 
 
 function App() {
-
-    const count = useSelector(state => state.count)
-    const dispatch = useDispatch()
     return (
-        // <>
-        //     <Nav/>
-        //     <Routes>
-        //         <Route path={'/'} element={<Home/>}/>
-        //         <Route path={'/chats'} element={<Main/>}/>
-        //         <Route path={'/profile'} element={<Profile/>}/>
-        //         <Route path={'*'} element={<Page404/>}/>
-        //     </Routes>
-        // </>
-        <div>
-            {count}
-            <button onClick={() => dispatch({type: 'plus'})}>INC</button>
-            <button onClick={() => dispatch({type: 'minus'})}>DEC</button>
-        </div>
+        <>
+            <Nav/>
+            <Routes>
+                <Route path={'/'} element={<Home/>}/>
+                <Route path={'/chats'} element={<Chats/>}/>
+                <Route path={'/messages/:id'} element={<Messages/>}/>
+                <Route path={'*'} element={<Page404/>}/>
+            </Routes>
+        </>
+
     );
 }
 
