@@ -4,6 +4,8 @@ import {messagesReducer} from "./reducers/messagesReducer/messagesReducer";
 import {createLogger} from "redux-logger/src";
 import {persistReducer, persistStore} from "redux-persist";
 import storage from 'redux-persist/lib/storage'
+import thunk from "redux-thunk";
+import {todosReducer} from "./reducers/todosReducer/todosReducer";
 
 // const logger = store => next => action => {
 //     console.log('dispatch', action)
@@ -27,10 +29,11 @@ const logger = createLogger({
 
 const rootReducer = combineReducers({
     chats: chatReducer,
-    messages: messagesReducer
+    messages: messagesReducer,
+    todos: todosReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export const store = createStore(persistedReducer, applyMiddleware(logger))
+export const store = createStore(persistedReducer, applyMiddleware(thunk, logger))
 export const persist = persistStore(store)

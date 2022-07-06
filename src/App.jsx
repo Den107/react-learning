@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Page404 from "./pages/404";
 import Chats from "./pages/Chats";
 import Messages from "./pages/Message";
+import Todos from "./pages/Todos";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                 <Route path={'/'} element={<Home/>}/>
                 <Route path={'/chats'} element={<Chats/>}/>
                 <Route path={'/messages/:id'} element={<Messages/>}/>
+                <Route path={'/todos'} element={<Todos/>}/>
                 <Route path={'*'} element={<Page404/>}/>
             </Routes>
         </>
