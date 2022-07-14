@@ -6,6 +6,7 @@ import {persistReducer, persistStore} from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 import thunk from "redux-thunk";
 import {todosReducer} from "./reducers/todosReducer/todosReducer";
+import {userReducer} from "./reducers/userReducer/userReducer";
 
 // const logger = store => next => action => {
 //     console.log('dispatch', action)
@@ -35,5 +36,5 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export const store = createStore(persistedReducer, applyMiddleware(thunk, logger))
+export const store = createStore(userReducer, persistedReducer, applyMiddleware(thunk, logger))
 export const persist = persistStore(store)
